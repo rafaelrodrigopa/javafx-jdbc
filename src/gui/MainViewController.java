@@ -10,13 +10,14 @@ import gui.util.Alerts;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.services.DepartmentService;
+import model.services.SellerService;
 
 public class MainViewController implements Initializable {
 
@@ -31,7 +32,12 @@ public class MainViewController implements Initializable {
 
 	@FXML
 	public void onMenuItemSellerAction() {
-		System.out.println("onMenuItemSellerAction");
+		
+		loadView("/gui/SellerList.fxml", (SellerListController controller) -> {
+			controller.setSellerService(new SellerService());
+			controller.updateTableView();
+		});
+		
 	}
 
 	@FXML
@@ -52,7 +58,7 @@ public class MainViewController implements Initializable {
 
 	}
 
-	// Synchronized assegura que aplicação rode sem interrupção de thred
+	// Synchronized assegura que aplicaï¿½ï¿½o rode sem interrupï¿½ï¿½o de thred
 	private synchronized <T> void loadView(String absoluteName, Consumer<T> initializingAction) {
 
 		try {
@@ -67,7 +73,7 @@ public class MainViewController implements Initializable {
 			mainVBox.getChildren().add(mainMenu);
 			mainVBox.getChildren().addAll(newVBox.getChildren());
 			
-			//Executa a função que é passada como argumento
+			//Executa a funï¿½ï¿½o que ï¿½ passada como argumento
 			T controller = loader.getController();
 			initializingAction.accept(controller);
 
