@@ -117,6 +117,7 @@ public class SellerFormController implements Initializable {
 			setErrorMessages(e.getErrors());
 		}
 		catch (DbException e) {
+//			e.printStackTrace();
 			Alerts.showAlert("Error saving object", null, e.getMessage(), AlertType.ERROR);
 		}
 		
@@ -147,10 +148,10 @@ public class SellerFormController implements Initializable {
 			exception.addError("email", "Field can't be empty");
 		}
 
-		obj.setName(txtEmail.getText());
+		obj.setEmail(txtEmail.getText());
 		
 		if(dpBirthDate.getValue() == null) {
-			exception.addError("birthDate", "");
+			exception.addError("birthDate", "Field can't be empty");
 		}else {
 			//Pega o valor do datepicker
 			Instant instant = Instant.from(dpBirthDate.getValue().atStartOfDay(ZoneId.systemDefault()));
